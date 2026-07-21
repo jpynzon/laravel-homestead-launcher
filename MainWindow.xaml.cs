@@ -28,7 +28,6 @@ namespace try_cs
         private bool ready;
         private bool busy;
 
-        private bool setupMode;
         private bool notesOpen;
         private bool notesDirty;
         private bool loadingNotes;
@@ -65,7 +64,6 @@ namespace try_cs
         private async Task UseHomestead(string path, bool initial)
         {
             ready = true;
-            setupMode = false;
             SetupPanel.Visibility = Visibility.Collapsed;
             PathText.Text = path;
             Log(initial ? $"Homestead found at {path}" : $"Using Homestead at {path}");
@@ -78,7 +76,6 @@ namespace try_cs
         private void EnterSetupMode()
         {
             ready = false;
-            setupMode = true;
             SetupPanel.Visibility = Visibility.Visible;
             PathText.Text = "";
             StateMachine.Text = "—";
@@ -221,13 +218,67 @@ namespace try_cs
             else StopPulse();
         }
 
-        private void ShowUnavailable(string hint)
+        // ---- Setup (locate / clone) -----------------------------------------
+
+        private async void Locate_Click(object sender, RoutedEventArgs e)
         {
-            currentStatus = new HomesteadStatus { State = HomesteadState.Unknown };
-            StateMachine.Text = "—";
-            StateProvider.Text = "";
-            SetState("Unavailable", "#FF5A4D", hint, pulse: false);
-            ApplyEnables();
+            var dialog = new System.Windows.Forms.FolderBrowserDialog
+            {
+                Description = "Select your Homestead folder (the one containing the Vagrantfile).",
+                ShowNewFolderButton = false
+            };
+            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+
+            string picked = dialog.SelectedPath;
+            if (launcher.TryValidate(picked))
+            {
+                launcher.SetDirectory(picked);
+                await UseHomestead(picked, initial: false);
+            }
+            else
+            {
+                MessageBox.Show(this,
+                    "No Vagrantfile was found in:\n" + picked +
+                    "\n\nPick the Homestead folder that contains a Vagrantfile.",
+                    "Locate Homestead", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private async void Clone_Click(object sender, RoutedEventArgs e)
+        {
+            string profile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string target = Path.Combine(profile, "Homestead");
+
+            if (Directory.Exists(target) && Directory.EnumerateFileSystemEntries(target).Any())
+            {
+                MessageBox.Show(this,
+                    "A non-empty folder already exists at:\n" + target +
+                    "\n\nUse “Locate Homestead…” to point to it, or remove it first.",
+                    "Clone Homestead", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var confirm = MessageBox.Show(this,
+                "Clone Laravel Homestead into:\n" + target +
+                "\n\nThis downloads the official repository with Git and runs its init script. Continue?",
+                "Clone Homestead", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (confirm != MessageBoxResult.Yes) return;
+
+            SetBusy("Cloning Homestead…");
+            Log("");
+            int code = await launcher.CloneAsync(target, Log);
+            ClearBusy();
+
+            if (code == 0 && launcher.TryValidate(target))
+            {
+                launcher.SetDirectory(target);
+                Log("[done] Homestead ready at " + target);
+                await UseHomestead(target, initial: false);
+            }
+            else
+            {
+                Log("[failed] Clone did not complete.");
+            }
         }
 
         // ---- Enable / busy state --------------------------------------------
@@ -244,6 +295,9 @@ namespace try_cs
             ReloadButton.IsEnabled = interactive && created;
             StatusButton.IsEnabled = interactive;
             SshButton.IsEnabled = terminal != null || (interactive && running);
+
+            LocateButton.IsEnabled = !busy;
+            CloneButton.IsEnabled = !busy;
         }
 
         private void SetBusy(string message)

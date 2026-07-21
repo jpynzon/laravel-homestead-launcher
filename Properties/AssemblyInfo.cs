@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("try-cs")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Homestead Launcher")]
+[assembly: AssemblyDescription("Launch and control a Laravel Homestead box.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("try-cs")]
+[assembly: AssemblyProduct("Homestead Launcher")]
 [assembly: AssemblyCopyright("Copyright ©  2026")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
