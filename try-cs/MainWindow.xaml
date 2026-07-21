@@ -1,0 +1,347 @@
+<Window x:Class="try_cs.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Homestead Console" Height="660" Width="900"
+        MinHeight="560" MinWidth="720"
+        WindowStartupLocation="CenterScreen"
+        Background="#17130F"
+        TextOptions.TextFormattingMode="Ideal"
+        FontFamily="Segoe UI">
+
+    <Window.Resources>
+
+        <!-- Neutral / ghost action button -->
+        <Style x:Key="GhostButton" TargetType="Button">
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Margin" Value="0,0,0,9"/>
+            <Setter Property="Foreground" Value="#EDE3D8"/>
+            <Setter Property="FontSize" Value="13.5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="15,0,0,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#241D17"/>
+            <Setter Property="BorderBrush" Value="#3A2F27"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" CornerRadius="9"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#30271F"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#4A3B30"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#3A2E24"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="Background" Value="#1D1712"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#2A231C"/>
+                                <Setter Property="Foreground" Value="#5F544A"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Filled action button (Start / Stop) -->
+        <Style x:Key="FilledButton" TargetType="Button" BasedOn="{StaticResource GhostButton}">
+            <Setter Property="Height" Value="52"/>
+            <Setter Property="FontSize" Value="14.5"/>
+            <Setter Property="Foreground" Value="#14110D"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" CornerRadius="9"
+                                Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.78"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="Background" Value="#1D1712"/>
+                                <Setter Property="Foreground" Value="#5F544A"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Eyebrow" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#8A7B6C"/>
+            <Setter Property="FontSize" Value="10.5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="4,0,0,8"/>
+        </Style>
+
+        <!-- Header toggle chip (Notes) -->
+        <Style x:Key="ToggleChip" TargetType="Button">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Padding" Value="16,0"/>
+            <Setter Property="Foreground" Value="#A79A8D"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#241D17"/>
+            <Setter Property="BorderBrush" Value="#3A2F27"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" CornerRadius="8"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#30271F"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#4A3B30"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Notes toolbar button -->
+        <Style x:Key="MiniButton" TargetType="Button">
+            <Setter Property="Height" Value="27"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="Foreground" Value="#C9BFB3"/>
+            <Setter Property="FontSize" Value="11.5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="#3A2F27"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" CornerRadius="6"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#241D17"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#4A3B30"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#30271F"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Beacon pulse (started/stopped from code-behind) -->
+        <Storyboard x:Key="BeaconPulse" RepeatBehavior="Forever" AutoReverse="True">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                             From="0.55" To="0.12" Duration="0:0:1.3"/>
+        </Storyboard>
+    </Window.Resources>
+
+    <Grid Margin="22,20,22,22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header / wordmark -->
+        <Grid Grid.Row="0" Margin="2,0,2,18">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Rectangle Width="10" Height="26" RadiusX="2" RadiusY="2" Fill="#F9463B"/>
+                <TextBlock Text="HOMESTEAD" Foreground="#F5EDE4"
+                           FontFamily="Bahnschrift, Segoe UI Semibold, Segoe UI"
+                           FontSize="26" FontWeight="Bold" Margin="12,0,0,0"
+                           VerticalAlignment="Center"/>
+                <TextBlock Text="CONSOLE" Foreground="#8A7B6C"
+                           FontFamily="Bahnschrift, Segoe UI" FontSize="26"
+                           FontWeight="Light" Margin="8,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                        VerticalAlignment="Center">
+                <TextBlock x:Name="BusyText" Text="" VerticalAlignment="Center"
+                           Foreground="#E8A33D" FontFamily="Consolas" FontSize="12.5"/>
+                <Button x:Name="NotesButton" Style="{StaticResource ToggleChip}"
+                        Content="📝  Notes" Click="Notes_Click" Margin="16,0,0,0"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Status hero -->
+        <Border Grid.Row="1" CornerRadius="14" Background="#211A14"
+                BorderBrush="#3A2F27" BorderThickness="1" Padding="24,20"
+                Margin="0,0,0,18">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- State readout -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Grid Width="20" Height="20" VerticalAlignment="Top" Margin="0,10,18,0">
+                        <Ellipse x:Name="BeaconHalo" Width="30" Height="30"
+                                 Fill="#8A7B6C" Opacity="0.3"/>
+                        <Ellipse x:Name="Beacon" Width="14" Height="14" Fill="#8A7B6C"/>
+                    </Grid>
+                    <StackPanel>
+                        <TextBlock Text="MACHINE STATE" Style="{StaticResource Eyebrow}" Margin="0,0,0,2"/>
+                        <TextBlock x:Name="StateText" Text="Checking"
+                                   Foreground="#F5EDE4"
+                                   FontFamily="Bahnschrift, Segoe UI Semibold, Segoe UI"
+                                   FontSize="40" FontWeight="Bold" Margin="-1,-4,0,0"/>
+                        <TextBlock x:Name="StateHint" Text="Reading current status..."
+                                   Foreground="#A79A8D" FontSize="13" Margin="1,2,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Machine identity -->
+                <StackPanel Grid.Column="1" VerticalAlignment="Center"
+                            HorizontalAlignment="Right">
+                    <TextBlock x:Name="StateMachine" Text="—" HorizontalAlignment="Right"
+                               Foreground="#F5EDE4" FontFamily="Consolas"
+                               FontSize="15" FontWeight="Bold"/>
+                    <TextBlock x:Name="StateProvider" Text="" HorizontalAlignment="Right"
+                               Foreground="#8A7B6C" FontFamily="Consolas"
+                               FontSize="12" Margin="0,3,0,0"/>
+                    <TextBlock x:Name="PathText" Text="" HorizontalAlignment="Right"
+                               Foreground="#6C5F53" FontFamily="Consolas"
+                               FontSize="11.5" Margin="0,10,0,0"
+                               MaxWidth="360" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Body: controls + console + notes -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="238"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition x:Name="NotesColumn" Width="0"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Controls -->
+            <StackPanel Grid.Column="0" Margin="0,0,18,0">
+                <!-- Setup (shown only when no Homestead was found) -->
+                <StackPanel x:Name="SetupPanel" Visibility="Collapsed" Margin="0,0,0,4">
+                    <TextBlock Text="SETUP" Style="{StaticResource Eyebrow}"/>
+                    <Button x:Name="LocateButton" Style="{StaticResource FilledButton}"
+                            Background="#E8A33D" Content="Locate Homestead…" Click="Locate_Click"/>
+                    <Button x:Name="CloneButton" Style="{StaticResource GhostButton}"
+                            Content="Clone new Homestead" Click="Clone_Click"/>
+                    <TextBlock Text="Clone downloads the official repo with Git."
+                               Foreground="#6C5F53" FontSize="10.5" TextWrapping="Wrap"
+                               Margin="4,2,0,14"/>
+                </StackPanel>
+
+                <TextBlock Text="MACHINE" Style="{StaticResource Eyebrow}"/>
+                <Button x:Name="UpButton" Style="{StaticResource FilledButton}"
+                        Background="#46C46A" Content="▶   Start machine" Click="Up_Click"/>
+                <Button x:Name="HaltButton" Style="{StaticResource FilledButton}"
+                        Background="#F9463B" Content="■   Stop machine" Click="Halt_Click"/>
+                <Button x:Name="ReloadButton" Style="{StaticResource GhostButton}"
+                        Content="Reload &amp; provision" Click="Reload_Click"/>
+
+                <TextBlock Text="ACCESS" Style="{StaticResource Eyebrow}" Margin="4,14,0,8"/>
+                <Button x:Name="SshButton" Style="{StaticResource GhostButton}"
+                        Content="Open SSH terminal" Click="Ssh_Click"/>
+
+                <TextBlock Text="INFO" Style="{StaticResource Eyebrow}" Margin="4,14,0,8"/>
+                <Button x:Name="StatusButton" Style="{StaticResource GhostButton}"
+                        Content="Refresh status" Click="Status_Click"/>
+            </StackPanel>
+
+            <!-- Console -->
+            <Border Grid.Column="1" CornerRadius="12" Background="#0E0B08"
+                    BorderBrush="#2E251E" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Background="#181310" CornerRadius="12,12,0,0" Padding="14,9">
+                        <DockPanel>
+                            <TextBlock x:Name="ConsoleTitle" Text="Output"
+                                       Foreground="#8A7B6C" FontSize="11.5"
+                                       FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            <Button x:Name="ClearButton" Content="Clear" Click="Clear_Click"
+                                    DockPanel.Dock="Right" HorizontalAlignment="Right"
+                                    Background="Transparent" BorderThickness="0"
+                                    Foreground="#6C5F53" Cursor="Hand" FontSize="11.5"/>
+                        </DockPanel>
+                    </Border>
+
+                    <Grid x:Name="ConsoleHost" Grid.Row="1" Margin="6">
+                        <TextBox x:Name="OutputBox"
+                                 Background="Transparent" Foreground="#C9BFB3"
+                                 BorderThickness="0"
+                                 FontFamily="Consolas" FontSize="12.5"
+                                 IsReadOnly="True" TextWrapping="Wrap"
+                                 VerticalScrollBarVisibility="Auto"
+                                 VerticalContentAlignment="Top"/>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- Notes (expands here, beside the console) -->
+            <Border x:Name="NotesPanel" Grid.Column="2" Visibility="Collapsed"
+                    Margin="18,0,0,0" CornerRadius="12" Background="#0E0B08"
+                    BorderBrush="#2E251E" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Background="#181310" CornerRadius="12,12,0,0" Padding="14,8">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                <Button Style="{StaticResource MiniButton}" Content="New" Click="NotesNew_Click"/>
+                                <Button Style="{StaticResource MiniButton}" Content="Open" Click="NotesOpen_Click" Margin="6,0,0,0"/>
+                                <Button Style="{StaticResource MiniButton}" Content="Save" Click="NotesSave_Click" Margin="6,0,0,0"/>
+                                <Button Style="{StaticResource MiniButton}" Content="Save as" Click="NotesSaveAs_Click" Margin="6,0,0,0"/>
+                            </StackPanel>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="NOTES" Foreground="#8A7B6C"
+                                           FontSize="10.5" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="NotesFile" Text="Untitled"
+                                           Foreground="#C9BFB3" FontFamily="Consolas"
+                                           FontSize="11.5" Margin="0,1,0,0"
+                                           TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                    <TextBox x:Name="NotesBox" Grid.Row="1" Margin="6"
+                             Background="Transparent" Foreground="#EDE3D8" CaretBrush="#F9463B"
+                             BorderThickness="0" FontFamily="Consolas" FontSize="13"
+                             AcceptsReturn="True" AcceptsTab="True" TextWrapping="NoWrap"
+                             VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                             VerticalContentAlignment="Top"
+                             TextChanged="NotesBox_TextChanged"
+                             PreviewKeyDown="NotesBox_PreviewKeyDown"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
