@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace try_cs.Services
+namespace HomesteadLauncher.Services
 {
     /// <summary>
     /// Reads and writes the notepad's .txt files and remembers the last file

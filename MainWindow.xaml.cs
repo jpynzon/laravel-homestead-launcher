@@ -9,11 +9,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using Microsoft.Win32;
-using try_cs.Controls;
-using try_cs.Models;
-using try_cs.Services;
+using HomesteadLauncher.Controls;
+using HomesteadLauncher.Models;
+using HomesteadLauncher.Services;
 
-namespace try_cs
+namespace HomesteadLauncher
 {
     public partial class MainWindow : Window
     {

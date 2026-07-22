@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{67113A7B-EF95-43A6-8C31-17E19E7BC568}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>try_cs</RootNamespace>
+    <RootNamespace>HomesteadLauncher</RootNamespace>
     <AssemblyName>HomesteadLauncher</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

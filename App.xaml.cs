@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace try_cs
+namespace HomesteadLauncher
 {
     public partial class App : Application
     {

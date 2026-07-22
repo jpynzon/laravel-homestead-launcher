@@ -1,4 +1,4 @@
-<Window x:Class="try_cs.ConfigEditorWindow"
+<Window x:Class="HomesteadLauncher.ConfigEditorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Configure" Height="620" Width="780"

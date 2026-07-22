@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using Microsoft.Win32.SafeHandles;
-using try_cs.Services.ConPty;
-using static try_cs.Services.ConPty.ConPtyInterop;
+using HomesteadLauncher.Services.ConPty;
+using static HomesteadLauncher.Services.ConPty.ConPtyInterop;
 
-namespace try_cs.Services
+namespace HomesteadLauncher.Services
 {
     /// <summary>
     /// A real pseudo-terminal session. Spawns a command attached to a Windows

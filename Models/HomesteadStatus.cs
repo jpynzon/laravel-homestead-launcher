@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace try_cs.Models
+namespace HomesteadLauncher.Models
 {
     public enum HomesteadState
     {

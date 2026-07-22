@@ -4,9 +4,9 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using try_cs.Models;
+using HomesteadLauncher.Models;
 
-namespace try_cs.Services
+namespace HomesteadLauncher.Services
 {
     /// <summary>
     /// Launches and controls a Laravel Homestead box by running vagrant

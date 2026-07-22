@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
-namespace try_cs.Services.ConPty
+namespace HomesteadLauncher.Services.ConPty
 {
     /// <summary>
     /// P/Invoke declarations for the Windows Pseudo Console (ConPTY) API and the

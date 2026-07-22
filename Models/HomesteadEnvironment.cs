@@ -1,4 +1,4 @@
-namespace try_cs.Models
+namespace HomesteadLauncher.Models
 {
     /// <summary>
     /// Describes the Homestead environment the launcher drives.

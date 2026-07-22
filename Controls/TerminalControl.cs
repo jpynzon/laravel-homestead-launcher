@@ -6,9 +6,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using try_cs.Services;
+using HomesteadLauncher.Services;
 
-namespace try_cs.Controls
+namespace HomesteadLauncher.Controls
 {
     /// <summary>
     /// A self-rendering terminal control. It owns a <see cref="PtySession"/>,

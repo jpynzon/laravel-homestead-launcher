@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace try_cs.Controls
+namespace HomesteadLauncher.Controls
 {
     /// <summary>One character cell: glyph plus colour/attribute state.</summary>
     public struct TerminalCell

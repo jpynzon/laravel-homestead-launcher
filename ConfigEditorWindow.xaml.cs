@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
-namespace try_cs
+namespace HomesteadLauncher
 {
     /// <summary>
     /// A small dark-themed text editor for a single config file. Saving tries a

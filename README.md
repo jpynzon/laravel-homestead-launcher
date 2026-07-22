@@ -53,14 +53,14 @@ On first launch it searches common locations for your Homestead folder. If it ca
 
 Using Visual Studio:
 
-1. Open `try-cs.csproj` in Visual Studio 2022.
+1. Open `HomesteadLauncher.csproj` in Visual Studio 2022.
 2. Set the configuration to **Release** and build (Ctrl+Shift+B).
 3. The app is produced at `bin/Release/HomesteadLauncher.exe`.
 
 Using MSBuild from the command line:
 
 ```bash
-msbuild try-cs.csproj /t:Rebuild /p:Configuration=Release
+msbuild HomesteadLauncher.csproj /t:Rebuild /p:Configuration=Release
 ```
 
 ---
