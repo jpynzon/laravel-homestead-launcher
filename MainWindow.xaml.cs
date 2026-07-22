@@ -164,6 +164,41 @@ namespace try_cs
 
         private void Clear_Click(object sender, RoutedEventArgs e) => OutputBox.Clear();
 
+        // ---- Config editors --------------------------------------------------
+
+        private void Hosts_Click(object sender, RoutedEventArgs e)
+        {
+            string hosts = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.System),
+                "drivers", "etc", "hosts");
+            new ConfigEditorWindow(this, "hosts file", hosts, requiresAdmin: true).ShowDialog();
+        }
+
+        private void Yaml_Click(object sender, RoutedEventArgs e)
+        {
+            new ConfigEditorWindow(this, "Homestead.yaml", ResolveYamlPath(), requiresAdmin: false).ShowDialog();
+        }
+
+        private string ResolveYamlPath()
+        {
+            string dir = launcher.Environment.Directory;
+            if (!string.IsNullOrWhiteSpace(dir))
+            {
+                string inDir = Path.Combine(dir, "Homestead.yaml");
+                if (File.Exists(inDir)) return inDir;
+            }
+
+            string home = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                ".homestead", "Homestead.yaml");
+            if (File.Exists(home)) return home;
+
+            // Fall back to the Homestead folder (created on save if absent).
+            return !string.IsNullOrWhiteSpace(dir)
+                ? Path.Combine(dir, "Homestead.yaml")
+                : home;
+        }
+
         // ---- Status --------------------------------------------------------
 
         private async Task RefreshStatusAsync()
@@ -298,6 +333,9 @@ namespace try_cs
 
             LocateButton.IsEnabled = !busy;
             CloneButton.IsEnabled = !busy;
+
+            HostsButton.IsEnabled = !busy;              // hosts is independent of Homestead
+            YamlButton.IsEnabled = ready && !busy;      // Homestead.yaml needs a known folder
         }
 
         private void SetBusy(string message)

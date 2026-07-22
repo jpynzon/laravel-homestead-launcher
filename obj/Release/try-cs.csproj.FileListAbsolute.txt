@@ -10,3 +10,5 @@ C:\accounts\practices\try-cs\try-cs\obj\Release\HomesteadLauncher.g.resources
 C:\accounts\practices\try-cs\try-cs\obj\Release\try-cs.csproj.CoreCompileInputs.cache
 C:\accounts\practices\try-cs\try-cs\obj\Release\HomesteadLauncher.exe
 C:\accounts\practices\try-cs\try-cs\obj\Release\HomesteadLauncher.pdb
+C:\accounts\practices\try-cs\try-cs\obj\Release\ConfigEditorWindow.baml
+C:\accounts\practices\try-cs\try-cs\obj\Release\ConfigEditorWindow.g.cs

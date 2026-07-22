@@ -272,6 +272,12 @@
                 <TextBlock Text="INFO" Style="{StaticResource Eyebrow}" Margin="4,14,0,8"/>
                 <Button x:Name="StatusButton" Style="{StaticResource GhostButton}"
                         Content="Refresh status" Click="Status_Click"/>
+
+                <TextBlock Text="CONFIG" Style="{StaticResource Eyebrow}" Margin="4,14,0,8"/>
+                <Button x:Name="HostsButton" Style="{StaticResource GhostButton}"
+                        Content="Configure hosts" Click="Hosts_Click"/>
+                <Button x:Name="YamlButton" Style="{StaticResource GhostButton}"
+                        Content="Configure Homestead.yaml" Click="Yaml_Click"/>
             </StackPanel>
 
             <!-- Console -->
