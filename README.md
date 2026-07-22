@@ -129,4 +129,4 @@ C# · WPF · .NET Framework 4.7.2 · Windows Pseudo Console (ConPTY) · Vagrant 
 
 ## License
 
-No license is set yet. If you want to allow others to reuse the code, add one (for example, [MIT](https://choosealicense.com/licenses/mit/)).
+Released under the [MIT License](LICENSE).
